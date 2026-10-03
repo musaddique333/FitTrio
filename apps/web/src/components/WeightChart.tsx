@@ -15,16 +15,20 @@ export default function WeightChart({
   weights,
   unit = 'kg',
   height = 220,
+  from,
 }: {
   weights: WeightLog[];
   unit?: 'kg' | 'lb';
   height?: number;
+  from?: string;
 }) {
-  const data = movingAverage(weights).map((w) => ({
-    ...w,
-    weight: Number(kgToUnit(w.weight, unit).toFixed(1)),
-    average: Number(kgToUnit(w.average, unit).toFixed(1)),
-  }));
+  const data = movingAverage(weights)
+    .filter((w) => !from || w.date >= from)
+    .map((w) => ({
+      ...w,
+      weight: Number(kgToUnit(w.weight, unit).toFixed(1)),
+      average: Number(kgToUnit(w.average, unit).toFixed(1)),
+    }));
   if (!data.length)
     return (
       <Empty

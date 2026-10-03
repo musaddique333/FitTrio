@@ -16,7 +16,7 @@ test('private fitness flows and responsive views', async ({ page }) => {
   await page.getByRole('button', { name: 'Today', exact: true }).click();
   await page.goto('/log');
   await page.getByLabel('Calories eaten').fill('1700');
-  await page.getByLabel('Weight', { exact: true }).fill('91.2');
+  await page.getByLabel(/^Weight/).fill('91.2');
   await page.getByRole('button', { name: 'Save check-in' }).click();
   await expect(page.getByText('Your check-in is saved. Keep going.')).toBeVisible();
   await page.reload();

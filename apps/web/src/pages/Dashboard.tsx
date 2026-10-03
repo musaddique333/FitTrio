@@ -162,10 +162,7 @@ export default function Dashboard() {
               7-day average
             </span>
           </div>
-          <WeightChart
-            weights={pastWeights.filter((w) => w.date >= addDays(today, -29))}
-            unit={user.unit}
-          />
+          <WeightChart weights={pastWeights} from={addDays(today, -29)} unit={user.unit} />
           <div className="chart-caption">
             <TrendingDown size={15} />
             <span>Look at the trend. One weigh-in doesn’t tell the whole story.</span>

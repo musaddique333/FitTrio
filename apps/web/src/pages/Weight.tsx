@@ -25,7 +25,7 @@ export default function Weight() {
   const past = weights.filter((w) => w.date <= today),
     latest = past.at(-1),
     first = past[0];
-  const visible = past.filter((w) => !range || w.date >= addDays(today, 1 - range));
+  const from = range ? addDays(today, 1 - range) : undefined;
   const trend = movingAverage(past).at(-1);
   const display = (n: number | undefined | null) =>
     n === undefined || n === null ? '—' : `${kgToUnit(n, user.unit).toFixed(1)} ${user.unit}`;
@@ -93,7 +93,7 @@ export default function Weight() {
             </button>
           ))}
         </div>
-        <WeightChart weights={visible} unit={user.unit} height={290} />
+        <WeightChart weights={past} from={from} unit={user.unit} height={290} />
         <p className="field-hint">
           Average uses available measurements from the preceding seven calendar days. Missing days
           are not estimated.

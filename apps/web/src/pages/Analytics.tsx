@@ -130,7 +130,8 @@ export default function Analytics() {
         <section className="panel">
           <h2>Weight in perspective</h2>
           <WeightChart
-            weights={weights.filter((w) => w.date >= from && w.date <= today)}
+            weights={weights.filter((w) => w.date <= today)}
+            from={from}
             unit={user.unit}
           />
           <Link to="/weight" className="text-link">

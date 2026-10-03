@@ -55,7 +55,12 @@ export function Empty({
   );
 }
 const Chart = lazy(() => import('./WeightChart'));
-export function WeightChart(props: { weights: WeightLog[]; unit?: 'kg' | 'lb'; height?: number }) {
+export function WeightChart(props: {
+  weights: WeightLog[];
+  unit?: 'kg' | 'lb';
+  height?: number;
+  from?: string;
+}) {
   return (
     <Suspense
       fallback={
