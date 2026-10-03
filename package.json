@@ -1,0 +1,61 @@
+{
+  "name": "fittrio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n api,web \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "wrangler dev --port 8787 --ip 127.0.0.1",
+    "dev:web": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "check": "npm run lint && npm run typecheck && npm test && npm run build",
+    "db:migrate": "wrangler d1 migrations apply fittrio-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply fittrio-db --remote",
+    "db:seed": "node --import tsx scripts/seed.ts",
+    "invite": "node --import tsx scripts/invite.ts",
+    "setup": "node scripts/setup.mjs",
+    "deploy": "npm run build && wrangler deploy",
+    "package": "node scripts/package.mjs"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.44.0",
+    "hono": "^4.8.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.0",
+    "recharts": "^3.0.0",
+    "sonner": "^2.0.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261001.1",
+    "@eslint/js": "^9.27.0",
+    "@playwright/test": "^1.52.0",
+    "@tailwindcss/vite": "^4.1.0",
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "^4.4.0",
+    "concurrently": "^9.1.0",
+    "eslint": "^9.27.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "miniflare": "^4.20250601.0",
+    "prettier": "^3.5.0",
+    "tailwindcss": "^4.1.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.0",
+    "typescript-eslint": "^8.32.0",
+    "vite": "^6.3.0",
+    "vitest": "^3.2.0",
+    "wrangler": "^4.20.0"
+  }
+}
