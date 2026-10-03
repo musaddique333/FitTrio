@@ -67,6 +67,8 @@ test('private fitness flows and responsive views', async ({ page }) => {
   }
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/');
+  await expect(page.getByRole('heading', { name: 'Keep going, Alex.' })).toBeVisible();
+  await expect(page.getByRole('img', { name: /Weight chart showing/ })).toBeVisible();
   await page.screenshot({ path: 'artifacts/dashboard-desktop.png', fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({ path: 'artifacts/dashboard-mobile.png', fullPage: true });

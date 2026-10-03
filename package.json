@@ -16,14 +16,15 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "check": "npm run lint && npm run typecheck && npm test && npm run build",
+    "check": "npm run lint && npm run typecheck && npm test && npm run build && npm run check:deploy",
     "db:migrate": "wrangler d1 migrations apply fittrio-db --local",
     "db:migrate:remote": "wrangler d1 migrations apply fittrio-db --remote",
     "db:seed": "node --import tsx scripts/seed.ts",
     "invite": "node --import tsx scripts/invite.ts",
     "setup": "node scripts/setup.mjs",
     "deploy": "npm run build && wrangler deploy",
-    "package": "node scripts/package.mjs"
+    "package": "node scripts/package.mjs",
+    "check:deploy": "node scripts/cloudflare.mjs --check-config"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.0",
@@ -48,6 +49,7 @@
     "concurrently": "^9.1.0",
     "eslint": "^9.27.0",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "jsonc-parser": "^3.3.1",
     "miniflare": "^4.20250601.0",
     "prettier": "^3.5.0",
     "tailwindcss": "^4.1.0",

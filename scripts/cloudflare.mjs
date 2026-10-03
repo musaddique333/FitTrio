@@ -1,6 +1,14 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { randomBytes } from 'node:crypto';
+import { parse } from 'jsonc-parser';
+const errors = [];
+const config = parse(readFileSync('wrangler.jsonc', 'utf8'), errors, { allowTrailingComma: true });
+if (errors.length) throw new Error('Invalid Wrangler JSONC configuration.');
+if (process.argv[2] === '--check-config') {
+  console.log('Cloudflare configuration is valid.');
+  process.exit(0);
+}
 const account = process.env.CLOUDFLARE_ACCOUNT_ID,
   token = process.env.CLOUDFLARE_API_TOKEN;
 if (!account || !token)
@@ -22,7 +30,6 @@ async function api(path, method = 'GET', body) {
   return data.result;
 }
 const run = (...args) => execFileSync('npx', ['wrangler', ...args], { stdio: 'inherit' });
-const config = JSON.parse(readFileSync('wrangler.jsonc', 'utf8'));
 const databases = await api('/d1/database?per_page=100');
 let database = databases.find((d) => d.name === 'fittrio-db');
 const created = !database;
